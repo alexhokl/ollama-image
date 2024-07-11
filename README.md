@@ -1,1 +1,1 @@
-# ollama-llava-example
+# ollama-image
