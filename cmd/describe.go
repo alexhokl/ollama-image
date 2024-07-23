@@ -9,32 +9,32 @@ import (
 	"github.com/spf13/cobra"
 )
 
-type summarizeOptions struct {
+type describeOptions struct {
 	modelName string
 	path      string
 }
 
-var summarizeOpts summarizeOptions
+var describeOpts describeOptions
 
-// summarizeCmd represents the summarize command
-var summarizeCmd = &cobra.Command{
-	Use:   "summarize",
-	Short: "Summarize an image",
-	RunE:  runSummarize,
+// describeCmd represents the describe command
+var describeCmd = &cobra.Command{
+	Use:   "describe",
+	Short: "describe an image",
+	RunE:  rundescribe,
 }
 
 func init() {
-	rootCmd.AddCommand(summarizeCmd)
+	rootCmd.AddCommand(describeCmd)
 
-	flags := summarizeCmd.Flags()
-	flags.StringVarP(&summarizeOpts.modelName, "model", "m", "llava:13b", "Model to use")
-	flags.StringVarP(&summarizeOpts.path, "file", "f", "", "Path to image file")
+	flags := describeCmd.Flags()
+	flags.StringVarP(&describeOpts.modelName, "model", "m", "llava:13b", "Model to use")
+	flags.StringVarP(&describeOpts.path, "file", "f", "", "Path to image file")
 
-	summarizeCmd.MarkFlagRequired("file")
+	describeCmd.MarkFlagRequired("file")
 }
 
-func runSummarize(cmd *cobra.Command, args []string) error {
-	imgData, err := os.ReadFile(summarizeOpts.path)
+func rundescribe(cmd *cobra.Command, args []string) error {
+	imgData, err := os.ReadFile(describeOpts.path)
 	if err != nil {
 		return err
 	}
@@ -45,7 +45,7 @@ func runSummarize(cmd *cobra.Command, args []string) error {
 	}
 
 	req := &api.GenerateRequest{
-		Model:  summarizeOpts.modelName,
+		Model:  describeOpts.modelName,
 		Prompt: "describe this image",
 		Images: []api.ImageData{imgData},
 	}
