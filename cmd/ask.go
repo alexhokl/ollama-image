@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/alexhokl/helper/cli"
 	"github.com/ollama/ollama/api"
 	"github.com/spf13/cobra"
 )
@@ -32,8 +33,12 @@ func init() {
 	flags.StringVarP(&askOpts.path, "file", "f", "", "Path to image file")
 	flags.StringVarP(&askOpts.question, "question", "q", "", "Question to ask")
 
-	askCmd.MarkFlagRequired("file")
-	askCmd.MarkFlagRequired("question")
+	if err := askCmd.MarkFlagRequired("file"); err != nil {
+		cli.LogUnableToMarkFlagAsRequired("file", err)
+	}
+	if err := askCmd.MarkFlagRequired("question"); err != nil {
+		cli.LogUnableToMarkFlagAsRequired("question", err)
+	}
 }
 
 func runAsk(cmd *cobra.Command, args []string) error {

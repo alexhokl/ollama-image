@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 
+	"github.com/alexhokl/helper/cli"
 	"github.com/ollama/ollama/api"
 	"github.com/spf13/cobra"
 )
@@ -30,7 +31,9 @@ func init() {
 	flags.StringVarP(&describeOpts.modelName, "model", "m", "llava:13b", "Model to use")
 	flags.StringVarP(&describeOpts.path, "file", "f", "", "Path to image file")
 
-	describeCmd.MarkFlagRequired("file")
+	if err := describeCmd.MarkFlagRequired("file"); err != nil {
+		cli.LogUnableToMarkFlagAsRequired("file", err)
+	}
 }
 
 func rundescribe(cmd *cobra.Command, args []string) error {

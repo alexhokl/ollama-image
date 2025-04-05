@@ -1,6 +1,8 @@
 package cmd
 
 import (
+	"log/slog"
+
 	"github.com/alexhokl/helper/cli"
 	"github.com/spf13/cobra"
 )
@@ -15,7 +17,11 @@ var rootCmd = &cobra.Command{
 }
 
 func Execute() {
-	rootCmd.Execute()
+	if err := rootCmd.Execute(); err != nil {
+		slog.Error(
+			"unhandled error",
+			slog.String("error", err.Error()))
+	}
 }
 
 func init() {
