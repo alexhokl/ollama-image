@@ -1,10 +1,16 @@
-version: '3'
+version: "3"
+
+env:
+  APP_NAME: ollama-image
 
 tasks:
-
   build:
     desc: Go build without output
     cmd: go build ./...
+
+  install:
+    desc: Intsall
+    cmd: go install
 
   test:
     desc: Run unit tests
@@ -21,8 +27,8 @@ tasks:
   open-coverage-html:
     desc: Test with coverage in HTML and open the HTML
     cmds:
-    - task coverage-html
-    - open coverage.html
+      - task coverage-html
+      - open coverage.html
 
   bench:
     desc: Run benchmarks on CPU and memory
@@ -31,7 +37,7 @@ tasks:
   bench-profile:
     desc: Run benchmarks on CPU and memory and create a profile
     cmds:
-    - go test -bench=. -benchmem -memprofile ./benchmarks/collection.mem.prof -cpuprofile ./benchmarks/collection.cpu.prof ./collection/
+      - go test -bench=. -benchmem -memprofile ./benchmarks/collection.mem.prof -cpuprofile ./benchmarks/collection.cpu.prof ./collection/
 
   lint:
     desc: Lint
@@ -41,3 +47,10 @@ tasks:
     desc: Security check
     cmd: gosec ./...
 
+  completion-mac:
+    desc: Generate bash completion and save to homebrew
+    cmd: $APP_NAME completion bash > /opt/homebrew/etc/bash_completion.d/$APP_NAME
+
+  completion-linux:
+    desc: Generate bash completion and save configuration directory
+    cmd: $APP_NAME completion bash | sudo tee /etc/bash_completion.d/$APP_NAME
