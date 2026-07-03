@@ -2,7 +2,7 @@ module github.com/alexhokl/ollama-image
 
 go 1.26.0
 
-require github.com/ollama/ollama v0.30.7
+require github.com/ollama/ollama v0.31.1
 
 require (
 	github.com/bahlo/generic-list-go v0.2.0 // indirect
